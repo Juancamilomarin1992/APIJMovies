@@ -24,7 +24,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="DAL\Dtos\" />
     <Folder Include="MoviesMapper\" />
-    <Folder Include="Repository\IRepository\" />
   </ItemGroup>
 
 </Project>
