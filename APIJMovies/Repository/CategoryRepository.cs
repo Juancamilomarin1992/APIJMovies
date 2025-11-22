@@ -40,11 +40,13 @@ namespace APIJMovies.Repository
 
         public async Task<bool> DeleteCategoryAsync(int id)
         {
-            var category = await _context.Categories.FirstOrDefaultAsync(c=>c.Id== id); //primero consulto que si existe en la categoria
+            var category = await GetCategoryAsync( id); //primero consulto que si existe en la categoria
+
             if(category == null)
             {
-                return false; // no existe
+                return false; // La categeria no existe
             }
+
             _context.Categories.Remove(category);
             return await SaveAsync();
         }

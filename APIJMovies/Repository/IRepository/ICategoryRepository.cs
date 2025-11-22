@@ -4,8 +4,8 @@ namespace APIJMovies.Repository.IRepository
 {
     public interface ICategoryRepository
     {
-        Task<ICollection<Category>> GetCategoriesAsync(); //me retorna una lista de categorias
-        Task<Category> GetCategoryAsync(int id); //me retorna una categoria por id
+        Task<ICollection<Category>> GetCategoriesAsync(); //Me retorna una lista de categorias
+        Task<Category> GetCategoryAsync(int id); //Me retorna una categoria por id
         Task<bool> CategoryExistsByIdAsync(int id); //me dice si existe una categoria por id
         Task<bool> CategoryExistsByNameAsync(string name); //me dice si existe una categoria por nombre
         Task<bool> CreateCategoryAsync(Category category); //me crea una categoria
