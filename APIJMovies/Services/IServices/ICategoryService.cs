@@ -1,11 +1,12 @@
-﻿using APIJMovies.DAL.Models;
+﻿using APIJMovies.DAL.Dtos;
+using APIJMovies.DAL.Models;
 
 namespace APIJMovies.Services.IServices
 {
     public interface ICategoryService
     {
-        Task<ICollection<Category>> GetCategoriesAsync(); 
-        Task<Category> GetCategoryAsync(int id); 
+        Task<ICollection<CategoryDto>> GetCategoriesAsync(); 
+        Task<CategoryDto> GetCategoryAsync(int id); 
         Task<bool> CategoryExistsByIdAsync(int id); 
         Task<bool> CategoryExistsByNameAsync(string name); 
         Task<bool> CreateCategoryAsync(Category category); 

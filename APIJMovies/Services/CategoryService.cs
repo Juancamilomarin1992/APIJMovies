@@ -2,16 +2,19 @@
 using APIJMovies.DAL.Models;
 using APIJMovies.Services.IServices;
 using APIJMovies.Repository.IRepository;
-using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using APIJMovies.DAL.Dtos;
 
 namespace APIJMovies.Services
 {
     public class CategoryService: ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
-        public CategoryService(ICategoryRepository categoryRepository)
+        private readonly IMapper _mapper;
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
         {
            _categoryRepository = categoryRepository;
+            _mapper = mapper;
         }
 
         public Task<bool> CategoryExistsByIdAsync(int id)
@@ -34,12 +37,13 @@ namespace APIJMovies.Services
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<Category>> GetCategoriesAsync()
+        public async Task<ICollection<CategoryDto>> GetCategoriesAsync()
         {
-            throw new NotImplementedException();
+            var categories = _categoryRepository.GetCategoriesAsync(); //solo estoy llamando al metodo desde la capa de repositorio
+            return _mapper.Map<ICollection<CategoryDto>>(categories); //mapeo la lista de categorias a CategoryDto
         }
 
-        public Task<Category> GetCategoryAsync(int id)
+        public Task<CategoryDto> GetCategoryAsync(int id)
         {
             throw new NotImplementedException();
         }
