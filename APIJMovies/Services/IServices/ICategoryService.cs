@@ -12,5 +12,6 @@ namespace APIJMovies.Services.IServices
         Task<bool> CreateCategoryAsync(Category category); 
         Task<bool> UpdateCategoryAsync(Category category); 
         Task<bool> DeleteCategoryAsync(int id); 
+        Task<CategoryDto> CreateCategoryAsync(CategoryCreateDto categoryCreateDto);
     }
 }

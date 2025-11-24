@@ -1,4 +1,8 @@
-﻿using APIJMovies.DAL.Models;
+﻿/*
+using APIJMovies.DAL;
+
+
+using APIJMovies.DAL.Models;
 using APIJMovies.Services.IServices;
 using APIJMovies.Repository.IRepository;
 using AutoMapper;
@@ -49,11 +53,6 @@ namespace APIJMovies.Services
             return _mapper.Map<CategoryDto>(category);  
         }
 
-        public Task<bool> CreateCategoryAsync(Category category)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<bool> DeleteCategoryAsync(int id)
         {
             throw new NotImplementedException();
@@ -76,10 +75,18 @@ namespace APIJMovies.Services
             throw new NotImplementedException();
         }
     }
+}*/
+
+
+
+
+
+
+
+
+namespace API.J.Movies.Services
+{
+    public class CategoryCreateUpdateDto
+    {
+    }
 }
-
-
-
-
-
-
