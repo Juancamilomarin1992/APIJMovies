@@ -2,7 +2,7 @@
 
 namespace APIJMovies.DAL.Dtos
 {
-    public class CategoryCreateDto
+    public class CategoryCreateUdateDto
     {
         [Required(ErrorMessage = "El nombre de la categoria es obligatorio")]
         [MaxLength(100, ErrorMessage = "Name cannot be longer than 100 characters.")]
