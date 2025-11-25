@@ -15,7 +15,7 @@ namespace APIJMovies.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet (Name = "GetCategoriesAsync")]
+        [HttpGet(Name = "GetCategoriesAsync")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -25,19 +25,26 @@ namespace APIJMovies.Controllers
             return Ok(categories); // 200 OK with the list of categories
         }
 
-        [HttpGet ("{id:int}", Name = "GetCategoryAsync")]
+        [HttpGet("{id}", Name = "GetCategoryAsync")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+       
 
         public async Task<ActionResult<CategoryDto>> GetCategoryAsync(int id)
         {
-            var categoryDto = await _categoryService.GetCategoryAsync(id);
-            return Ok(categoryDto); // 200 OK with the list of categories
+            try 
+            {
+                var categoryDto = await _categoryService.GetCategoryAsync(id);
+                return Ok(categoryDto); // 200 OK with the list of categories
+            } 
+            catch (InvalidOperationException ex)when (ex.Message.Contains("no se encontro"))
+            {
+                return NotFound(new { ex.Message });
+            }         
         }
-
-        [HttpPost( Name = "CreateCategoryAsync")]
+        [HttpPost(Name = "CreateCategoryAsync")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -46,7 +53,7 @@ namespace APIJMovies.Controllers
 
         public async Task<ActionResult<CategoryDto>> CreateCategoryAsync([FromBody] CategoryCreateUdateDto categoryCreateDto)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
@@ -62,17 +69,15 @@ namespace APIJMovies.Controllers
             }
             catch (InvalidOperationException ex) when (ex.Message.Contains("ya exite"))
             {
-               return Conflict(new { ex.Message});
+                return Conflict(new { ex.Message });
             }
-           
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-            
         }
 
-        [HttpPut("{id int}", Name = "UpdateCategoryAsync")]
+        [HttpPut("{id}", Name = "UpdateCategoryAsync")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -95,7 +100,32 @@ namespace APIJMovies.Controllers
             {
                 return Conflict(new { ex.Message });
             }
-            catch (InvalidOperationException ex) when (ex.Message.Contains("no se encuentro"))
+            catch (InvalidOperationException ex) when (ex.Message.Contains("no se encontro"))
+            {
+                return NotFound(new { ex.Message });
+            }
+
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}", Name = "DeleteCategoryAsync")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult> DeleteCategoryAsync(int id)
+        {
+            try
+            {
+                var deletetedCategory = await _categoryService.DeleteCategoryAsync( id);
+                return Ok(deletetedCategory);//Retorno 200 OK si se elimino correctamente
+
+            }
+            catch (InvalidOperationException ex) when (ex.Message.Contains("no se encontro"))
             {
                 return NotFound(new { ex.Message });
             }
@@ -106,6 +136,5 @@ namespace APIJMovies.Controllers
             }
 
         }
-
     }
 }

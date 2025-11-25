@@ -54,9 +54,21 @@ namespace APIJMovies.Services
 
         public async Task<bool> DeleteCategoryAsync(int id)
         {
-            throw new NotImplementedException();
+            // validar si la categoria ya existe
+            var categoryExists = await _categoryRepository.GetCategoryAsync(id);
+            if (categoryExists == null)
+            {
+                throw new InvalidOperationException($"no se encontro la categoría con Id: {id}");
+            }
+            // eliminar la categoria en el repositorio
+            var categoryDeleted = await _categoryRepository.DeleteCategoryAsync(id);
+            
+            if (!categoryDeleted)
+            {
+                throw new Exception("ocurrio un error al eliminar la categoria");
+            }
+            return categoryDeleted;
         }
-
         public async Task<ICollection<CategoryDto>> GetCategoriesAsync()
         {
             var categories = await _categoryRepository.GetCategoriesAsync(); //solo estoy llamando al metodo desde la capa de repositorio
@@ -65,7 +77,14 @@ namespace APIJMovies.Services
 
         public async Task<CategoryDto> GetCategoryAsync(int id)
         {
-            var category = await _categoryRepository.GetCategoryAsync(id); 
+            //obtener la categoria por id desde el repositorio
+            var category = await _categoryRepository.GetCategoryAsync(id);
+
+            if (category == null)
+            {
+                throw new InvalidOperationException($"no se encontro la categoría con Id: {id}");
+            }
+            //Mapear toda coleccion de una vez
             return _mapper.Map<CategoryDto>(category);
         }
 
@@ -81,7 +100,7 @@ namespace APIJMovies.Services
 
             if (categoryExists == null)
             {
-                throw new InvalidOperationException($"No se encontro la categoría con Id: {id}");
+                throw new InvalidOperationException($"no se encontro la categoría con Id: {id}");
             }
 
             var nameExists = await _categoryRepository.CategoryExistsByNameAsync(dto.Name);
