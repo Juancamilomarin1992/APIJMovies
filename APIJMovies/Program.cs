@@ -18,9 +18,11 @@ builder.Services.AddDbContext<ApplicationDbContextMovie>(options => options.UseS
 
 //inyeccion de dependencias para los servicios
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IMovieService, MovieService>();
 
 //inyeccion de dependencias para los repositorios
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
