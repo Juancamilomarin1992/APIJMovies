@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace APIJMovies.DAL.Models
 {
-    public class Movie: AuditBaseMovie
+    public class Movie : AuditBaseMovie
     {
         [Required] //el campo Name es obligatorio
         [Display(Name = "Nombre de la pelicula")]//personalizar el nombre de la propiedad

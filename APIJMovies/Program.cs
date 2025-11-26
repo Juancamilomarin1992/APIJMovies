@@ -1,4 +1,5 @@
 using APIJMovies.DAL;
+using APIJMovies.DAL.Models;
 using APIJMovies.MoviesMapper;
 using APIJMovies.Repository;
 using APIJMovies.Repository.IRepository;
@@ -12,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<Mappers>());
+
+builder.Services.AddDbContext<ApplicationDbContextMovie>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
 
 //inyeccion de dependencias para los servicios
 builder.Services.AddScoped<ICategoryService, CategoryService>();
