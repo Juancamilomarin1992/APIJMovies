@@ -19,7 +19,7 @@ namespace APIJMovies.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ICollection<MovieDto>>> GetMovies()
+        public async Task<ActionResult<ICollection<MovieDto>>> GetMoviesAsyn()
         {
             var movies = await _movieService.GetMoviesAsync();
             return Ok(movies);

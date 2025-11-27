@@ -12,9 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
-builder.Services.AddAutoMapper(cfg => cfg.AddProfile<Mappers>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MovieMappers>());
 
 builder.Services.AddDbContext<ApplicationDbContextMovie>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<Mappers>());
 
 //inyeccion de dependencias para los servicios
 builder.Services.AddScoped<ICategoryService, CategoryService>();
