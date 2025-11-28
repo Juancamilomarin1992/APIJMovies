@@ -17,19 +17,20 @@ namespace APIJMovies.Services
             _mapper = mapper;
         }
 
-        public Task<bool> CreateMovieAsync(Movie movie)
+        public async Task<bool> CreateMovieAsync(Movie movie)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteMovieAsync(int id)
+        public async Task<bool> DeleteMovieAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<MovieDto> GetMovieAsync(int id)
+        public async Task<MovieDto> GetMovieAsync(int id)
         {
-            throw new NotImplementedException();
+            var movie = await _movieRepository.GetMovieAsync(id);
+            return _mapper.Map<MovieDto>(movie);
         }
 
         public async Task<ICollection<MovieDto>> GetMoviesAsync()
@@ -38,7 +39,7 @@ namespace APIJMovies.Services
             return _mapper.Map<ICollection<MovieDto>>(movies);
         }
 
-        public Task<bool> UpdateMovieAsync(Movie movie)
+        public async Task<bool> UpdateMovieAsync(Movie movie)
         {
             throw new NotImplementedException();
         }
