@@ -10,5 +10,9 @@ namespace APIJMovies.Services.IServices
         Task<bool> CreateMovieAsync(Movie movie);
         Task<bool> UpdateMovieAsync(Movie movie);
         Task<bool> DeleteMovieAsync(int id);
+
+        Task <MovieDto> CreateMovieAsync(MovieCreateDto movieCreateDto);
+        
+
     }
 }

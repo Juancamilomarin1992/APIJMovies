@@ -9,7 +9,8 @@ namespace APIJMovies.Repository.IRepository
         Task<bool> CreateMovieAsync(Movie movie);//crea una nueva Movie
         Task<bool> UpdateMovieAsync(Movie movie);//Me actualiza una Movie
         Task<bool> DeleteMovieAsync(int id);//Me elimina una Movie
-                                                 
+        Task<bool> MovieExistsByNameAsync(string name);
+
 
     }
 }
