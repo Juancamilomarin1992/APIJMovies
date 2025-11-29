@@ -13,6 +13,9 @@ namespace APIJMovies.DAL.Dtos
         public DateTime ModifiedDate { get; set; }
         public int Duration { get; set; }
         public string Description { get; set; }
+
+        [Required(ErrorMessage = "La clasificacion de la pelicula es obligatoria")]
+        [MaxLength(10, ErrorMessage = "El número maximo de caracteres es de 10.")]
         public string Clasification { get; set; }
 
 

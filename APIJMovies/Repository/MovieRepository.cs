@@ -13,6 +13,20 @@ namespace APIJMovies.Repository
             _dbcontex = dbcontext;
         }
 
+        public async Task<bool> MovieExistsByIdAsync(int id)
+        {
+            return await _dbcontex.Movies
+                .AsNoTracking()
+                .AnyAsync(c => c.Id == id);
+        }
+
+        public async Task<bool> MovieExistsByNameAsync(string name)
+        {
+            return await _dbcontex.Movies
+                .AsNoTracking()
+                .AnyAsync(c => c.Name == name);
+        }
+
         public async Task<bool> CreateMovieAsync(Movie movie)
         {
             movie.CreatedDate = DateTime.UtcNow;
