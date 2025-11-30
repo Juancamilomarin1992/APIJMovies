@@ -8,10 +8,10 @@ namespace APIJMovies.Services.IServices
         Task<ICollection<MovieDto>> GetMoviesAsync();
         Task<MovieDto> GetMovieAsync(int id);
         Task<bool> CreateMovieAsync(Movie movie);
-        Task<bool> UpdateMovieAsync(Movie movie);
+        Task<bool> UpdateMovieAsync(MovieCreateUpdateDto dto, int id);
         Task<bool> DeleteMovieAsync(int id);
 
-        Task <MovieDto> CreateMovieAsync(MovieCreateDto movieCreateDto);
+        Task <MovieDto> CreateMovieAsync(MovieCreateUpdateDto movieCreateDto);
         
 
     }

@@ -8,7 +8,7 @@ namespace APIJMovies.MoviesMapper
     {
         public MovieMappers() {
             CreateMap<Movie, MovieDto>().ReverseMap();
-            CreateMap<Movie, MovieCreateDto>().ReverseMap();
+            CreateMap<Movie, MovieCreateUpdateDto>().ReverseMap();
 
     }
     }

@@ -35,15 +35,17 @@ namespace APIJMovies.Controllers
         public async Task<ActionResult<MovieDto>> GetMovieAsync(int id)
 
         {
-            var movieDto = await _movieService.GetMovieAsync(id);
-            return Ok(movieDto);
+            try
+            {
+                var movieDto = await _movieService.GetMovieAsync(id);
+                return Ok(movieDto);   
+            }
+            catch (InvalidDataException ex) when (ex.Message.Contains("no se encontro"))
+            {
+                return NotFound(new { ex.Message });
+            }                     
         }
-        /*public async Task<ActionResult<ICollection<MovieDto>>> GetMovieAsync(int id)
-        {
-            var movies = await _movieService.GetMovieAsync(id);
-            return Ok(movies);
-        }  */
-
+        
         [HttpPost(Name = "CreateMovieAsync")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -52,7 +54,7 @@ namespace APIJMovies.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
 
 
-         public async Task<ActionResult<MovieDto>> CreateMovieAsync([FromBody] MovieCreateDto movieCreateDto)
+         public async Task<ActionResult<MovieDto>> CreateMovieAsync([FromBody] MovieCreateUpdateDto movieCreateDto)
          {
              if (!ModelState.IsValid)
              {
@@ -79,6 +81,67 @@ namespace APIJMovies.Controllers
                  return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
              }
          }
+        [HttpPut("{id}", Name = "UpdateMovieAsync")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult<MovieDto>> UpdateMovieAsync([FromBody] MovieCreateUpdateDto dto, int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var updatetedMovie = await _movieService.UpdateMovieAsync(dto, id);
+                return Ok(updatetedMovie);
+
+            }
+            catch (InvalidOperationException ex) when (ex.Message.Contains("ya exite"))
+            {
+                return Conflict(new { ex.Message });
+            }
+            catch (InvalidOperationException ex) when (ex.Message.Contains("no se encontro"))
+            {
+                return NotFound(new { ex.Message });
+            }
+
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        //Delete Movie
+
+        [HttpDelete("{id}", Name = "DeleteMovieAsync")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult> DeleteMovieAsync(int id)
+        {
+            try
+            {
+                var deletetedMovie = await _movieService.DeleteMovieAsync(id);
+                return Ok(deletetedMovie);
+
+            }
+            
+            catch (InvalidOperationException ex) when (ex.Message.Contains("no se encontro"))
+            {
+                return NotFound(new { ex.Message });
+            }
+
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 
 }
